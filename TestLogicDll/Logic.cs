@@ -7,34 +7,29 @@ namespace PasswordManagerLogic
 
     public class Logic
     {
-        public static Context global_context = new Context();
-        static void Main() {
-
-        }
         public static List<Service> GetServices() {
-           
-               return global_context.Services.ToList();
-           
+           using (Context ctx=new Context()) {
+               return ctx.Services.ToList();
+           };
         }
         public static void AddNewService(string _serviceName) {
-
-            global_context.Services.Add(new Service() {
+            using (Context ctx = new Context()) {
+                ctx.Services.Add(new Service() {
                     Name = _serviceName
                 });
-            global_context.SaveChangesAsync();
-            
+                ctx.SaveChangesAsync();
+            };
         }
-        public static void AddNewData(string _firstField,string _passWord,string _serviceName,ref string test) {
-            
-                Service _sr= global_context.Services.ToList().Find(service => service.Name == _serviceName);
-            global_context.Data.Add(new Data() {
+        public static void AddNewData(string _firstField,string _passWord,string _serviceName) {
+            using (Context ctx = new Context()) {
+                Service? _sr=ctx.Services.ToList().Find(service => service.Name == _serviceName);
+                ctx.Data.Add(new Data() {
                     FirstField = _firstField,
                     Password= _passWord,
                     Service= _sr,
                 });
-                test +=_sr.Name+" "+_sr.Id+" ,";
-            global_context.SaveChangesAsync();
-            
+                ctx.SaveChangesAsync();
+            };
         }
         public static void DeleteData(int _Id) {
             using (Context ctx = new Context()) {
@@ -50,13 +45,6 @@ namespace PasswordManagerLogic
                 ctx.SaveChangesAsync();
             };
         }
-        public static List<Data> GetData() {
-            using (Context ctx = new Context()) {
-                return ctx.Data.ToList();
-            };
-        }
-        public static string InfoString(IPrintInfoString item) {
-            return item.PrintInfo();
-        }
+
     }
 }

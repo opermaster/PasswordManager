@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.7*" />
+            <ColumnDefinition Width="0.3*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ListBox x:Name="main_list" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Margin="10"></ListBox>
+        <Button x:Name="Add_Button" Grid.Column="2" Grid.Row="0" Click="Add_Button_Click">Add</Button>
+        <Button x:Name="Add_Button2" Grid.Column="2" Grid.Row="1"  Click="Add_Button2_Click">Add2</Button>
     </Grid>
 </Window>
