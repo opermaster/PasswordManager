@@ -1,60 +1,68 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using PasswordManagerLogic.Models;
+﻿using PasswordManagerLogic.Models;
 
 namespace PasswordManagerLogic
 {
-
-    public class Logic
+    /// <summary>
+    /// Main static class that is used for connecting with Db
+    /// </summary>
+    public static class Logic
     {
+        /// <summary>
+        /// Gloabal context that connects to Db
+        /// </summary>
         public static Context global_context = new Context();
-        static void Main() {
-
-        }
-        public static List<Service> GetServices() {
-           
-               return global_context.Services.ToList();
-           
-        }
+        static void Main() { }
+        /// <summary>
+        /// This method adds new service in Db by name
+        /// </summary>
+        /// <param name="_serviceName"></param>
         public static void AddNewService(string _serviceName) {
-
             global_context.Services.Add(new Service() {
-                    Name = _serviceName
-                });
+                Name = _serviceName == "" ? "Undefined service" : _serviceName //Cheking if input string is empty string, if it is return "Undefined service"
+            });
             global_context.SaveChangesAsync();
-            
+
         }
-        public static void AddNewData(string _firstField,string _passWord,string _serviceName,ref string test) {
-            
-                Service _sr= global_context.Services.ToList().Find(service => service.Name == _serviceName);
+        /// <summary>
+        /// This method adds new data ,to Db, by providing it first field, password, service name
+        /// </summary>
+        /// <param name="_firstField"></param>
+        /// <param name="_passWord"></param>
+        /// <param name="_serviceName"></param>
+        public static void AddNewData(string _firstField, string _passWord, string _serviceName) {
+            Service? _sr = global_context.Services.ToList().Find(service => service.Name == _serviceName);
             global_context.Data.Add(new Data() {
-                    FirstField = _firstField,
-                    Password= _passWord,
-                    Service= _sr,
-                });
-                test +=_sr.Name+" "+_sr.Id+" ,";
+                FirstField = _firstField,
+                Password = _passWord,
+                Service = _sr,
+            });
             global_context.SaveChangesAsync();
-            
+
         }
+        /// <summary>
+        /// This method deletes Data from Db by providing Id of tha Data
+        /// </summary>
+        /// <param name="_Id"></param>
         public static void DeleteData(int _Id) {
-            using (Context ctx = new Context()) {
-                Data? _dt = ctx.Data.ToList().Find(data => data.Id == _Id);
-                ctx.Data.Remove(_dt);
-                ctx.SaveChangesAsync();
-            };
+            Data? _dt = global_context.Data.ToList().Find(data => data.Id == _Id);
+            global_context.Data.Remove(_dt);
+            global_context.SaveChangesAsync();
         }
+        /// <summary>
+        /// This method deletes Service from Db by providing Id of tha Service
+        /// </summary>
+        /// <param name="_Id"></param>
         public static void DeleteService(int _Id) {
-            using (Context ctx = new Context()) {
-                Service? _sr = ctx.Services.ToList().Find(service => service.Id == _Id);
-                ctx.Services.Remove(_sr);
-                ctx.SaveChangesAsync();
-            };
+            Service? _sr = global_context.Services.ToList().Find(service => service.Id == _Id);
+            global_context.Services.Remove(_sr);
+            global_context.SaveChangesAsync();
+
         }
-        public static List<Data> GetData() {
-            using (Context ctx = new Context()) {
-                return ctx.Data.ToList();
-            };
-        }
+        /// <summary>
+        /// Method for objects that have realesation of IPrintInfoString interface, used for getting string from object.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>String</returns>
         public static string InfoString(IPrintInfoString item) {
             return item.PrintInfo();
         }
