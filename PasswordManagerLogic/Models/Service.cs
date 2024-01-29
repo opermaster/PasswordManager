@@ -16,7 +16,7 @@
         /// </summary>
         /// <returns></returns>
         public string PrintInfo() {
-            return Id+" "+Name?? "Undefined service";
+            return Name?? "Undefined service";
         }
         /// <summary>
         /// Returns Service as String

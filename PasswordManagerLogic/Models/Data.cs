@@ -18,7 +18,7 @@
         /// </summary>
         /// <returns></returns>
         public string PrintInfo() {
-            return Id+" "+FirstField + " " +Password;
+            return FirstField + " " +Password;
         }
     }
 }

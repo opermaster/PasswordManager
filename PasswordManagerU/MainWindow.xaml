@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PasswordManagerU"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="PasswordManager" Height="450" Width="800" Closed="Window_Closed">
     <Window.Resources>
         <Style TargetType="{x:Type Control}" x:Key="baseStyle">
-            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource baseStyle}"></Style>
         <Style TargetType="{x:Type Label}" BasedOn="{StaticResource baseStyle}"></Style>
@@ -30,6 +31,8 @@
             <Button x:Name="Add_Button2" Height="30" Margin="10" Click="Add_Button2_Click">Add data from db</Button>
             <Button x:Name="Add_Service_Button" Height="30" Margin="10" Click="Add_Service_Button_Click">Add new Service</Button>
             <Button x:Name="Add_Data_Button" Height="30" Margin="10" Click="Add_Data_Button_Click">Add new Data</Button>
+            <Button x:Name="Delete_Data_Button" Height="30" Margin="10" Click="Delete_Data_Button_Click">Delete Data</Button>
+            <Button x:Name="Delete_Service_Button" Height="30" Margin="10" Click="Delete_Service_Button_Click">Delete Service</Button>
         </StackPanel>
         
     </Grid>

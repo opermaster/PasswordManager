@@ -5,12 +5,13 @@ namespace PasswordManagerLogic
     /// <summary>
     /// Main static class that is used for connecting with Db
     /// </summary>
-    public static class Logic
+    public class Logic
     {
         /// <summary>
         /// Gloabal context that connects to Db
         /// </summary>
-        public static Context global_context = new Context();
+        public static Context global_context=new Context();
+
         static void Main() { }
         /// <summary>
         /// This method adds new service in Db by name
@@ -20,7 +21,7 @@ namespace PasswordManagerLogic
             global_context.Services.Add(new Service() {
                 Name = _serviceName == "" ? "Undefined service" : _serviceName //Cheking if input string is empty string, if it is return "Undefined service"
             });
-            global_context.SaveChangesAsync();
+            global_context.SaveChanges();
 
         }
         /// <summary>
@@ -36,26 +37,34 @@ namespace PasswordManagerLogic
                 Password = _passWord,
                 Service = _sr,
             });
-            global_context.SaveChangesAsync();
+            global_context.SaveChanges();
 
         }
         /// <summary>
         /// This method deletes Data from Db by providing Id of tha Data
         /// </summary>
         /// <param name="_Id"></param>
-        public static void DeleteData(int _Id) {
+        public static bool DeleteData(int _Id) {
             Data? _dt = global_context.Data.ToList().Find(data => data.Id == _Id);
-            global_context.Data.Remove(_dt);
-            global_context.SaveChangesAsync();
+            if (_dt is not null) {
+                global_context.Data.Remove(_dt);
+                global_context.SaveChanges();
+                return true;
+            }
+            else return false;
         }
         /// <summary>
         /// This method deletes Service from Db by providing Id of tha Service
         /// </summary>
         /// <param name="_Id"></param>
-        public static void DeleteService(int _Id) {
+        public static bool DeleteService(int _Id) {
             Service? _sr = global_context.Services.ToList().Find(service => service.Id == _Id);
-            global_context.Services.Remove(_sr);
-            global_context.SaveChangesAsync();
+            if (_sr is not null) {
+                global_context.Services.Remove(_sr);
+                global_context.SaveChanges();
+                return true;
+            }
+            else return false;
 
         }
         /// <summary>

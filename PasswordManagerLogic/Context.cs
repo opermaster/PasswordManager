@@ -15,7 +15,7 @@ namespace PasswordManagerLogic
         /// </summary>
         public DbSet<Data> Data { get; set; } = null!;
         public Context() {
-           Database.EnsureDeleted();
+           //Database.EnsureDeleted();
            Database.EnsureCreated();
         }
         /// <summary>
