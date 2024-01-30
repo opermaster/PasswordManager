@@ -1,4 +1,6 @@
-﻿using PasswordManagerLogic.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PasswordManagerLogic.Models;
+using System.Security.Cryptography;
 
 namespace PasswordManagerLogic
 {
@@ -74,6 +76,15 @@ namespace PasswordManagerLogic
         /// <returns>String</returns>
         public static string InfoString(IPrintInfoString item) {
             return item.PrintInfo();
+        }
+        /// <summary>
+        /// Method that finds all occurrences in names of all services. And returns them if there are mathes
+        /// </summary>
+        /// <param name="_name"></param>
+        /// <returns></returns>
+        public static List<Service> FindServiceByName(string _name) {
+            List<Service> _sr = global_context.Services.Where(service => EF.Functions.Like(service.Name, $"%{_name}%")).ToList();
+            return _sr;
         }
     }
 }

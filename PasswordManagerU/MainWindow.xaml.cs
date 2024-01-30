@@ -28,11 +28,29 @@ namespace PasswordManagerU
             int dt_id = 1;
             List<Service> services = Logic.global_context.Services.ToList();
             foreach (var service in services) {
-                main_list.Items.Add(sr_id + " " + Logic.InfoString(service) + " :");
+                main_list.Items.Add("Id - "+sr_id + " " + Logic.InfoString(service) + " :");
                 service_indexes[sr_id] = service.Id;
                 sr_id++;
                 foreach (var data in service.Data) {
-                    main_list.Items.Add("\t" + dt_id + " " + Logic.InfoString(data));
+                    main_list.Items.Add("\t" + "Id - " + dt_id + " " + Logic.InfoString(data));
+                    data_indexes[dt_id] = data.Id;
+                    dt_id++;
+                }
+            }
+        }
+        /// <summary>
+        /// Overload of function UpdateList(), for making it display special lists of services
+        /// </summary>
+        private void UpdateList(List<Service> services) {
+            main_list.Items.Clear();
+            int sr_id = 1;
+            int dt_id = 1;
+            foreach (var service in services) {
+                main_list.Items.Add("Id - " + sr_id + " " + Logic.InfoString(service) + " :");
+                service_indexes[sr_id] = service.Id;
+                sr_id++;
+                foreach (var data in service.Data) {
+                    main_list.Items.Add("\t" + "Id - " + dt_id + " " + Logic.InfoString(data));
                     data_indexes[dt_id] = data.Id;
                     dt_id++;
                 }
@@ -48,37 +66,16 @@ namespace PasswordManagerU
             List<Service> services = Logic.global_context.Services.ToList();
             List<Data> data = Logic.global_context.Data.ToList();
             foreach(Service service in services) {
-                main_list.Items.Add(sr_id + " " + Logic.InfoString(service) + " :");
+                main_list.Items.Add("Id - " + sr_id + " " + Logic.InfoString(service) + " :");
                 service_indexes[sr_id] = service.Id;
                 sr_id++;
                 List<Data> data_for_service = data.FindAll(dt=>dt.Service==service);
                 foreach(Data dt_f_s in data_for_service) {
-                    main_list.Items.Add("\t" + dt_id + " " + Logic.InfoString(dt_f_s));
+                    main_list.Items.Add("\t" + "Id - " + dt_id + " " + Logic.InfoString(dt_f_s));
                     data_indexes[dt_id] = dt_f_s.Id;
                     dt_id++;
                 }
             }
-        }
-        /// <summary>
-        /// Temp handler for refreshing a main list of Services and Data
-        /// </summary>
-        private void Refresh_Button_Click(object sender, RoutedEventArgs e) {
-            UpdateList();
-        }
-        /// <summary>
-        /// Temp handler for adding hardcoded data into Db and main list of Services and Data
-        /// </summary>
-        private void Add_Button2_Click(object sender, RoutedEventArgs e) {
-            Logic.AddNewService("TestService#1");
-            Logic.AddNewService("TestService#2");
-            Logic.AddNewService("TestService#3");
-            Logic.AddNewData("TestData#1.1", "TestData#1.2", "TestService#1");
-            Logic.AddNewData("TestData#2.1", "TestData#2.2", "TestService#2");
-            Logic.AddNewData("TestData#2.1", "TestData#2.2", "TestService#1");
-            Logic.AddNewData("TestData#3.1", "TestData#3.2", "TestService#3");
-            Logic.AddNewService("TestService#4");
-            Logic.AddNewData("TestData#4.1", "TestData#4.2", "TestService#4");
-
         }
         /// <summary>
         /// Handler for button that adds new service into Db and main list.
@@ -151,6 +148,14 @@ namespace PasswordManagerU
         /// </summary>
         private void Window_Closed(object sender, EventArgs e) {
             Logic.global_context.Dispose();
+        }
+        /// <summary>
+        /// Handler for Find_Service button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Find_Service_Button_Click(object sender, RoutedEventArgs e) {
+            UpdateList(Logic.FindServiceByName(Service_Name_Box.Text));
         }
     }
 }

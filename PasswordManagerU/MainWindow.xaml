@@ -22,18 +22,24 @@
             <ColumnDefinition Width="0.3*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="0.9*" />
         </Grid.RowDefinitions>
-        <ListBox x:Name="main_list" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="10"></ListBox>
-        <StackPanel Grid.Column="2" Grid.Row="2" >
-            <Button x:Name="Refresh_Button" Height="30" Margin="10" Click="Refresh_Button_Click">Refresh</Button>
-            <Button x:Name="Add_Button2" Height="30" Margin="10" Click="Add_Button2_Click">Add data from db</Button>
+        <Grid Grid.Column="0" Grid.Row="0" Margin="10 10 10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.7*" />
+                <ColumnDefinition Width="0.15*" />
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" x:Name="Service_Name_Box" Height="30"></TextBox>
+            <Button Grid.Column="1"  x:Name="Find_Service_Button" Height="30" Margin="10" Click="Find_Service_Button_Click">Find</Button>
+        </Grid>
+        <ListBox x:Name="main_list" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="10">
+        </ListBox>
+        <StackPanel Grid.Column="2" Grid.Row="2">
             <Button x:Name="Add_Service_Button" Height="30" Margin="10" Click="Add_Service_Button_Click">Add new Service</Button>
             <Button x:Name="Add_Data_Button" Height="30" Margin="10" Click="Add_Data_Button_Click">Add new Data</Button>
             <Button x:Name="Delete_Data_Button" Height="30" Margin="10" Click="Delete_Data_Button_Click">Delete Data</Button>
             <Button x:Name="Delete_Service_Button" Height="30" Margin="10" Click="Delete_Service_Button_Click">Delete Service</Button>
         </StackPanel>
-        
     </Grid>
 </Window>
